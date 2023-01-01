@@ -174,6 +174,8 @@ int linux_dtree_overlay(char *boot_args)
     fdt_appendprop_addrrange(fdt, 0, node1, "reg", gBootArgs->Video.v_baseAddr, fb_size);
     fdt_appendprop(fdt, node1, "no-map", "", 0);
 
+    // FIXME: This causes my ipad mini 2 to panic loading linux, idk how this would work even for A11 devices.
+#if 0
     if (gBootArgs->physBase > 0x800000000)
     {
         /* Reserve TZ/low FW regions and such */
@@ -186,7 +188,8 @@ int linux_dtree_overlay(char *boot_args)
         fdt_appendprop_addrrange(fdt, 0, node1, "reg", 0x800000000, (gBootArgs->physBase - 0x800000000));
         fdt_appendprop(fdt, node1, "no-map", "", 0);
     }
-    else if (gBootArgs->physBase < 0x800000000)
+#endif    
+    /*else*/ if (gBootArgs->physBase < 0x800000000)
         panic("sar how did you get under dram base");
 
     return 0;
